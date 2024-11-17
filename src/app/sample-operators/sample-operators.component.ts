@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { from, Subscription, map, of } from 'rxjs';
+import { from, Subscription, map, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-sample-operators',
@@ -20,16 +20,27 @@ export class SampleOperatorsComponent implements OnInit, OnDestroy{
       { id: 3, type: 'fuji' },
     ]);//observable
 
+    // this.subApples = apples$
+    //   .pipe(//pipe passes operators to observables
+    //     map(a => ({...a, color: 'red'}))
+    //   ).subscribe(x => console.log('Apple:', x));
     this.subApples = apples$
       .pipe(//pipe passes operators to observables
-        map(a => ({...a, color: 'red'}))
-      ).subscribe(x => console.log('Apple:', x));
+        map(a => ({...a, color: 'red'})),
+        tap(a => console.log('Apple:', a))
+      ).subscribe();
 
     
+    // this.subNumbers = of(2,4,7)
+    //   .pipe(
+    //     map(item => item * 2)
+    //   ).subscribe(n => console.log('Multiplies:', n));
+
     this.subNumbers = of(2,4,7)
       .pipe(
-        map(item => item * 2)
-      ).subscribe(n => console.log('Multiplies:', n));
+        map(item => item * 2),
+        tap(item => console.log('Multiplied:',item))
+      ).subscribe();
 
   }
 
