@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { from, fromEvent, of, Subscription } from 'rxjs';
+import { SampleOperatorsComponent } from './sample-operators/sample-operators.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SampleOperatorsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -37,6 +38,12 @@ export class AppComponent implements OnInit, OnDestroy {
       //   next: ev => console.log('Click event:', ev.target),
       //   error: err => console.log('Error occured:', err),
       //   complete: () => console.log('No more events')
+      // });
+
+      // const keys: string[] = [];
+      // this.subEvent = fromEvent(document, 'keydown').subscribe((ev) => {
+      //   keys.push((ev as KeyboardEvent).key);
+      //   console.log('Key array:', keys);
       // });
   }
 
