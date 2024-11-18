@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { from, Subscription, map, of, tap, filter } from 'rxjs';
+import { from, Subscription, map, of, tap, filter, timer, take } from 'rxjs';
 
 @Component({
   selector: 'app-sample-operators',
@@ -13,6 +13,7 @@ export class SampleOperatorsComponent implements OnInit, OnDestroy{
   subApples!: Subscription;//subscription variable
   subNumbers!: Subscription;
   subFilter!: Subscription;
+  subTimer!: Subscription;
 
   ngOnInit(): void {
     const apples$ = from([
@@ -48,6 +49,13 @@ export class SampleOperatorsComponent implements OnInit, OnDestroy{
         filter(n => n % 2 == 0),
         tap(x => console.log('Even:', x))
       ).subscribe();
+
+      this.subTimer = timer(0, 1000)
+                        .pipe(take(5)).subscribe({
+                            next: item => console.log('Timer:', item),
+                            error: err => console.log('Error:',err),
+                            complete: () => console.log('No more ticks')
+      });
 
   }
 
