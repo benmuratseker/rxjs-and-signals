@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { from, Subscription, map, of, tap } from 'rxjs';
+import { from, Subscription, map, of, tap, filter } from 'rxjs';
 
 @Component({
   selector: 'app-sample-operators',
@@ -12,6 +12,7 @@ export class SampleOperatorsComponent implements OnInit, OnDestroy{
 
   subApples!: Subscription;//subscription variable
   subNumbers!: Subscription;
+  subFilter!: Subscription;
 
   ngOnInit(): void {
     const apples$ = from([
@@ -42,9 +43,17 @@ export class SampleOperatorsComponent implements OnInit, OnDestroy{
         tap(item => console.log('Multiplied:',item))
       ).subscribe();
 
+    this.subFilter = of(2, 3, 5, 6, 9, 8)
+      .pipe(
+        filter(n => n % 2 == 0),
+        tap(x => console.log('Even:', x))
+      ).subscribe();
+
   }
 
   ngOnDestroy(): void {
       this.subApples.unsubscribe();
+      this.subNumbers.unsubscribe();
+      this.subFilter.unsubscribe();
   }
 }
